@@ -1,0 +1,52 @@
+<br><br>
+<form [formGroup]="channelForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+        <mat-label>Channel Name</mat-label>
+        <input matInput formControlName="channel_name" >
+        <mat-error *ngIf="f.channel_name.errors?.required">Channel Name Harus Terisi</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>
+
+
+<br>
+<label>Cari :</label>
+<mat-form-field floatLabel="never">
+    <input matInput [(ngModel)]="searchKey" placeholder="Cari" autocomplete="off" (keyup)="applyFilter()">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+        <mat-icon>close</mat-icon>
+    </button>
+</mat-form-field>
+<mat-table [dataSource]="listDataChannel" matSort>
+    <ng-container matColumnDef="no">
+        <mat-header-cell *matHeaderCellDef>No</mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">{{ (paginator.pageIndex * paginator.pageSize) + (i+1) }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="channel_id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Channel ID</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.channel_id }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="channel_name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Channel Name</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.channel_name }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="channel_detail">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button class="material-icons" (click)="onChannelDetail(element)">
+                arrow_forward_ios
+            </button>
+            <button mat-icon-button color="warn" (click)="onDelete(element)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumnsChannel"></mat-header-row>
+    <mat-row mat-row *matRowDef="let row; columns: displayedColumnsChannel"></mat-row>
+</mat-table>
+<mat-paginator
+    #paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    showFirstLastButtons>
+</mat-paginator>

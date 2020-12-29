@@ -1,0 +1,38 @@
+<br><br>
+<label>Cari :</label>
+<mat-form-field floatLabel="never">
+        <input matInput [(ngModel)]="searchKey" placeholder="Cari" autocomplete="off" (keyup)="applyFilter()">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+<mat-table [dataSource]="listDataChannelService" matSort>
+    <ng-container matColumnDef="no">
+        <mat-header-cell *matHeaderCellDef>No</mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">{{ (paginator.pageIndex * paginator.pageSize) + (i+1) }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="channel_service_id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Channel Service Id</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.channel_service_id }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="channel_id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Channel Id</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.channel_id }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="service_path">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Service Path</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.service_path }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="method">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Method</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.method }}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumnsChannel"></mat-header-row>
+    <mat-row mat-row *matRowDef="let row; columns: displayedColumnsChannel"></mat-row>
+</mat-table>
+<mat-paginator
+    #paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    showFirstLastButtons>
+</mat-paginator>

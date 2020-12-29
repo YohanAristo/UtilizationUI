@@ -1,0 +1,12 @@
+<mat-toolbar color="primary" class="navbar">
+    <div (click)="onMainPage()">Utilization</div>
+    <div>
+        <mat-menu #appMenu="matMenu">
+            <button mat-menu-item>Logout</button>    
+        </mat-menu>
+        <span mat-flat-button [matMenuTriggerFor]="appMenu" class="navbar-menu">
+            Menu
+            <span class="material-icons">arrow_drop_down</span>
+        </span>
+    </div>
+</mat-toolbar>
